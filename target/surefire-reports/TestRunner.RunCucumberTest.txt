@@ -1,0 +1,18 @@
+-------------------------------------------------------------------------------
+Test set: TestRunner.RunCucumberTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 1.215 sec <<< FAILURE! - in TestRunner.RunCucumberTest
+EMPTY_NAME(Reset functionality on login page of Application)  Time elapsed: 0.515 sec  <<< ERROR!
+java.lang.IllegalStateException: The driver executable does not exist: C:\Users\RafaePaula\LuxoftTask\lib\chromedriver.exe
+	at com.google.common.base.Preconditions.checkState(Preconditions.java:585)
+	at org.openqa.selenium.remote.service.DriverService.checkExecutable(DriverService.java:137)
+	at org.openqa.selenium.remote.service.DriverService.findExecutable(DriverService.java:132)
+	at org.openqa.selenium.chrome.ChromeDriverService.access$000(ChromeDriverService.java:35)
+	at org.openqa.selenium.chrome.ChromeDriverService$Builder.findDefaultExecutable(ChromeDriverService.java:156)
+	at org.openqa.selenium.remote.service.DriverService$Builder.build(DriverService.java:346)
+	at org.openqa.selenium.chrome.ChromeDriverService.createDefaultService(ChromeDriverService.java:91)
+	at org.openqa.selenium.chrome.ChromeDriver.<init>(ChromeDriver.java:123)
+	at utilities.DriverWrapper.initializeDriver(DriverWrapper.java:21)
+	at TestRunner.Steps.navigateToUrl(Steps.java:14)
+	at ?.Open Chrome and launch the application(file:///C:/Users/RafaePaula/LuxoftTask/src/test/resources/Features/openChrome.feature:6)
+
