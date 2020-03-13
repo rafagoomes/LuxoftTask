@@ -3,6 +3,7 @@ package TestRunner;
 import PageObjects.HomePage;
 import PageObjects.UBSInSocietyPage;
 import PageObjects.WealthManagementPage;
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.After;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -10,6 +11,8 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import Utilities.DriverWrapper;
 
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class Steps {
@@ -55,15 +58,14 @@ public class Steps {
         hp.clickUbsInSocietyOption();
     }
 
-    @And("I Search for Brazil content")
-    public void searchForBrazilContent() throws InterruptedException {
-        usp.searchForBrazilContent();
+    @And("^I Search for '(.*?)' content$")
+    public void searchForCountry(String country) {
+        usp.searchForCountry(country);
     }
 
-    @Then("I check if search results has expected result")
-    public void checkSearchResult(){
-        usp.validateResultsFound();
-        usp.validateArticleFoundTitle();
+    @Then("^I check if search results has '(.*?)'$")
+    public void checkSearchResult(String expectedResult){
+        usp.validateResultsFound(expectedResult);
     }
 
     @When("UBS in Society page is opened")
@@ -73,24 +75,30 @@ public class Steps {
     }
 
     @When("I fulfill form fields")
-    public void fillForm() {
-        wmp.openHelpYouDropdown();
-        wmp.selectHelpYouDropdown("General question");
-        wmp.selectMyInvestibleDropdown("USD 2 million+");
-        wmp.writeRequestMessage("This is a test!");
-        wmp.checkMrRadioButton();
-        wmp.fillFirstName("Rafael");
-        wmp.fillLastName("Gomes");
-        wmp.fillEmail("rafaelgomes@email.com");
-        wmp.checkCallYouRadioButton();
-        wmp.openCountryResidenceDropdown();
-        wmp.selectCountryResidenceDropdown("Brazil");
-        wmp.clickUnderstandCheckbox();
-        wmp.clickMarketingCheckbox();
+    public void fillForm(DataTable dt) {
+        List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+
+        for (Map<String, String> rows : list) {
+
+            wmp.openHelpYouDropdown();
+            wmp.selectHelpYouDropdown(rows.get("Dropdown1"));
+            wmp.selectMyInvestibleDropdown(rows.get("Dropdown2"));
+            wmp.writeRequestMessage(rows.get("DescriptionField"));
+            wmp.checkMrRadioButton();
+            wmp.fillFirstName(rows.get("FirstName"));
+            wmp.fillLastName(rows.get("LastName"));
+            wmp.fillEmail(rows.get("Email"));
+            wmp.checkCallYouRadioButton();
+            wmp.openCountryResidenceDropdown();
+            wmp.selectCountryResidenceDropdown(rows.get("Country"));
+            wmp.clickUnderstandCheckbox();
+            wmp.clickMarketingCheckbox();
+        }
+
     }
 
     @Then("I click on reset button")
-    public void resetFillForm() {
+    public void resetFillForm() throws InterruptedException {
         wmp.clickResetButton();
     }
 

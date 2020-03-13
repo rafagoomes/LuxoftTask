@@ -119,8 +119,9 @@ public class WealthManagementPage {
         confirmMarketingCheckbox.click();
     }
 
-    public void clickResetButton() {
+    public void clickResetButton() throws InterruptedException {
         ExpectedConditions.visibilityOf(resetButton);
         resetButton.click();
+
     }
 }

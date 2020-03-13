@@ -23,28 +23,20 @@ public class UBSInSocietyPage {
     private WebElement searchTextField;
     @FindBy(how = How.XPATH, using = "//span[@class = 'sdactivitystream__filterResultsTxt']")
     private WebElement resultsFound;
-    @FindBy(how = How.XPATH, using = "//h3[@class = 'sdactivitystreamtile__hl']/a")
-    private WebElement articleFoundTitle;
 
     public void validateUbsInSocietyPageIsOpen() {
         ExpectedConditions.visibilityOf(ubsInSocietyHeader);
         Assert.assertEquals("UBS in Society", ubsInSocietyHeader.getText());
     }
 
-    public void searchForBrazilContent() throws InterruptedException {
+    public void searchForCountry(String country){
         ExpectedConditions.visibilityOf(searchTextField);
-        searchTextField.sendKeys("Brazil");
+        searchTextField.sendKeys(country);
         searchTextField.sendKeys(Keys.RETURN);
-        Thread.sleep(3000);
     }
 
-    public void validateResultsFound(){
+    public void validateResultsFound(String expectedValue){
         ExpectedConditions.visibilityOf(resultsFound);
-        Assert.assertEquals("Found 1 results for applied filters", resultsFound.getText());
-    }
-
-    public void validateArticleFoundTitle(){
-        ExpectedConditions.visibilityOf(articleFoundTitle);
-        Assert.assertEquals("Zero deforestation", articleFoundTitle.getText());
+        Assert.assertEquals(expectedValue, resultsFound.getText());
     }
 }
